@@ -14,6 +14,7 @@ struct node{
 node *awl_smpl_alp = NULL;
 node *awl_smpl_dgt = NULL;
 node *awl_smpl_sym = NULL;
+node *gabung = NULL;
 //Devide
 void inpt_list_alp(int c,string data){
 	node *temp, *temp2;
@@ -62,7 +63,8 @@ void inpt_list_sym(int c,string data){
 		temp2->next = temp;
 	}
 } 
-//Conquer
+
+
 void alp_konver(){
 	node *bantu;
 	int c;
@@ -163,6 +165,95 @@ void sym_konver(){
 	
 } 
 
+void sort1(){
+	node *kiri;
+	node *kanan;
+	node *temp, *temp2;
+	kiri = awl_smpl_alp;
+	kanan = awl_smpl_dgt;
+	
+	
+	do{
+
+		 if(kiri==NULL){
+		//masukan semua data yang ada di kanan;
+		do{
+		temp = new node;
+		temp->id = kanan->id;
+		temp->data = kanan->data;
+		temp->token = kanan->token;
+		temp->next = NULL;
+		if (gabung == NULL)
+			gabung = temp;
+		else{
+			temp2 = gabung;
+			while (temp2->next != NULL)
+				temp2 = temp2->next;
+				temp2->next = temp;
+		}
+
+		kanan = kanan->next;
+		}while(kanan!=NULL);
+	}else if(kanan==NULL){
+		//masukan semua data yang ada di kiri;
+		do{
+		temp = new node;
+		temp->id = kiri->id;
+		temp->data = kiri->data;
+		temp->token = kiri->token;
+		temp->next = NULL;
+		if (gabung == NULL)
+			gabung = temp;
+		else{
+			temp2 = gabung;
+			while (temp2->next != NULL)
+				temp2 = temp2->next;
+				temp2->next = temp;
+		}
+
+		kiri = kiri->next;
+		}while(kiri!=NULL);
+	}else if(kiri->id < kanan->id){
+		//inputkirikelist
+		
+		temp = new node;
+		temp->id = kiri->id;
+		temp->data = kiri->data;
+		temp->token = kiri->token;
+		temp->next = NULL;
+		if (gabung == NULL)
+			gabung = temp;
+		else{
+			temp2 = gabung;
+			while (temp2->next != NULL)
+				temp2 = temp2->next;
+				temp2->next = temp;
+		}
+
+		kiri = kiri->next;
+	}else if(kiri->id > kanan->id){
+		//inputkananlist
+		
+		temp = new node;
+		temp->id = kanan->id;
+		temp->data = kanan->data;
+		temp->token = kanan->token;
+		temp->next = NULL;
+		if (gabung == NULL)
+			gabung = temp;
+		else{
+			temp2 = gabung;
+			while (temp2->next != NULL)
+				temp2 = temp2->next;
+				temp2->next = temp;
+		}
+
+		kanan = kanan->next;
+	}
+
+	}while((kanan!=NULL)||(kiri!=NULL));
+}
+
 void tampil_list(){
 	node *bantu;
 	cout << "Data Alpha"<<endl;
@@ -194,6 +285,18 @@ void tampil_list(){
 		cout << "Data Kosong";
 	else{
 		bantu = awl_smpl_sym;
+		do{
+			cout << bantu->id << "  ";
+			cout << bantu->data << "       ";
+			cout << bantu->token<<endl;
+			bantu = bantu->next;  
+		}while (bantu != NULL);
+	}
+	cout << "Hasil gabung : "<<endl;
+	if (gabung == NULL)
+		cout << "Data Kosong";
+	else{
+		bantu = gabung;
 		do{
 			cout << bantu->id << "  ";
 			cout << bantu->data << "       ";
@@ -338,10 +441,8 @@ if(file.is_open()){
 alp_konver();
 dgt_konver();
 sym_konver();
+sort1();
 tampil_list();
 hapus();
 	return 0;
 }
-
-
-
