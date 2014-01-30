@@ -365,7 +365,26 @@ void tampil_list(){
 	
 } 
 
+void simpan(char namafile[]){
+	node *bantu;
+	ofstream file;
+	file.open(namafile);
+	file << "Hasil Scan : "<<endl;
+	file << "no      ||word      || Token"<<endl<<endl;
+	if (gbng_p2 == NULL)
+		file << "Data Kosong";
+	else{
+		bantu = gbng_p2;
+		do{
+			file << bantu->id << "        ";
+			file << bantu->data << "          ";
+			file << bantu->token<<endl;
+			bantu = bantu->next;  
+		}while (bantu != NULL);
+	}
 
+	file.close();
+} 
 
 void hapus(){
 	node *bantu;
@@ -428,8 +447,8 @@ char namafile[41];
 int c=0;
 string teks;
 string digit;
-strcpy(namafile,argv[1]);
-ifstream file(namafile);
+strcpy(namafile,argv[3]);
+ifstream file(argv[1]);
 if(file.is_open()){
 	while(true!=(file.eof())){
 
@@ -519,6 +538,7 @@ sym_konver();
 sort1();
 sort2();
 tampil_list();
+simpan(namafile);
 hapus();
 	return 0;
 }
