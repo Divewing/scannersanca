@@ -94,7 +94,6 @@ void alp_konver(){
 	
 } 
 
-<<<<<<< HEAD
 void dgt_konver(){
 	node *bantu;
 	int k,g;
@@ -163,9 +162,6 @@ void sym_konver(){
 	}
 	
 } 
-=======
-
->>>>>>> e17a67203a880ba279001549576fdee6e85f3d68
 
 void tampil_list(){
 	node *bantu;
@@ -175,13 +171,8 @@ void tampil_list(){
 	else{
 		bantu = awl_smpl_alp;
 		do{
-<<<<<<< HEAD
 			cout << bantu->id << "  ";
 			cout << bantu->data << "       ";
-=======
-			cout << bantu->id << " ";
-			cout << bantu->data << " ";
->>>>>>> e17a67203a880ba279001549576fdee6e85f3d68
 			cout << bantu->token<<endl;
 			bantu = bantu->next;  
 		}while (bantu != NULL);
@@ -345,11 +336,8 @@ if(file.is_open()){
   file.close();
 }
 alp_konver();
-<<<<<<< HEAD
 dgt_konver();
 sym_konver();
-=======
->>>>>>> e17a67203a880ba279001549576fdee6e85f3d68
 tampil_list();
 hapus();
 	return 0;
