@@ -1,0 +1,47 @@
+variabel
+  nama18 : str;
+  jumlah : float;
+  panjang : int;
+  n : int;	
+
+mulai
+  tulis "Masukan nama anda : ";
+  baca(nama) \gb;
+  tulis "Masukan panjang jari-jari : ";
+  baca(panjang) \gb;
+  jumlah = 3.14 * panjang * panjang;
+  tulis "Nama anda adalah : " nama;
+  tulis "Lingkaran dengan panjang " panjang " adalah " jumlah;
+  baca(n);
+ 
+#if
+ 
+  jika(n == 10)maka{
+    tulis "nilai n : " n;
+  }atau jika(n == 9)maka{
+    tulis "nilai n : " n;
+  }atau{
+    tulis "nilai n : " n;
+  }
+
+#do while
+
+  ketika(i<10){
+    tulis i \gb;
+    i = i + 1;
+  }
+
+#while do
+
+  lakukan{
+    tulis i \gb;
+    i = i + 1;
+  }ketika(i<10)
+
+#for
+
+  untuk (i = 1) sampai (i <= 10){
+    tulis i gb;
+  }
+         	
+selesai;
