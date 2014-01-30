@@ -14,7 +14,7 @@ struct node{
 node *awl_smpl_alp = NULL;
 node *awl_smpl_dgt = NULL;
 node *awl_smpl_sym = NULL;
-
+//Devide
 void inpt_list_alp(int c,string data){
 	node *temp, *temp2;
 	temp = new node;
@@ -62,7 +62,7 @@ void inpt_list_sym(int c,string data){
 		temp2->next = temp;
 	}
 } 
-
+//Conquer
 void alp_konver(){
 	node *bantu;
 	int c;
