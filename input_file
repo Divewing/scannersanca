@@ -1,5 +1,5 @@
-variabel
-  nama18 : str;
+var
+  nama18 : string;
   jumlah : float;
   panjang : int;
   n : int;	
