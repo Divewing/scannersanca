@@ -1,8 +1,5 @@
 #include <iostream>
-#include <cstdlib>
-#include <malloc.h>
 #include <string.h>
-#include <stdio.h>
 #include <fstream>
 
 
@@ -11,6 +8,7 @@ using namespace std;
 struct node{
 	int id;
 	string data;
+	string token;
 	node *next;
 };
 node *awl_smpl_alp = NULL;
@@ -65,6 +63,39 @@ void inpt_list_sym(int c,string data){
 	}
 } 
 
+void alp_konver(){
+	node *bantu;
+	int c;
+	bool ketemu;
+	string keyword[17] ={"var","mulai","selesai","int","string","program"
+			   			,"float","tulis","baca ","jika","maka","atau"
+			   			,"ketika","lakukan","untuk","sampai"}; 
+	if (awl_smpl_alp == NULL)
+		cout << "Data Kosong";
+	else{
+		bantu = awl_smpl_alp;
+		do{
+		c =0;
+		ketemu = false;
+		while(c!=16){
+			if(keyword[c]==bantu->data){
+				bantu->token = "T_" + keyword[c];
+				ketemu = true;
+				c = 15;
+			}
+			c++;
+		}
+		if(ketemu==false){
+			bantu->token = "T_ident";
+		}
+			bantu = bantu->next;  
+		}while (bantu != NULL);
+	}
+	
+} 
+
+
+
 void tampil_list(){
 	node *bantu;
 	cout << "Data Alpha"<<endl;
@@ -74,7 +105,8 @@ void tampil_list(){
 		bantu = awl_smpl_alp;
 		do{
 			cout << bantu->id << " ";
-			cout << bantu->data<<endl;
+			cout << bantu->data << " ";
+			cout << bantu->token<<endl;
 			bantu = bantu->next;  
 		}while (bantu != NULL);
 	}
@@ -103,6 +135,8 @@ void tampil_list(){
 
 	
 } 
+
+
 
 void hapus(){
 	node *bantu;
@@ -155,9 +189,12 @@ if(file.is_open()){
 		file >> noskipws >> kar;
 	
 		if(isalpha(kar)){
+			int k=1;
 				do{
-					teks += kar;
+					if(k==1){teks = kar;};
+					if(k==0){teks += kar;};
 					file >> noskipws >> kar;
+					k = 0;
 				}while(isalnum(kar));
 			c = c+1;
 			inpt_list_alp(c,teks);
@@ -165,9 +202,12 @@ if(file.is_open()){
 		}
 
 		if(isdigit(kar)){
+				int k=1;
 				do{
-					digit += kar;
+					if(k==1){digit = kar;};
+					if(k==0){digit += kar;};
 					file >> noskipws >> kar;
+					k = 0;
 				}while((isdigit(kar))||(kar=='.'));
 			c = c+1;
 			inpt_list_dgt(c,digit);
@@ -176,13 +216,13 @@ if(file.is_open()){
 		}
 
 		if(kar == '"'){
+			teks = kar;
 			do{
-				teks += kar;
 				file >> noskipws >> kar;
+				teks += kar;
 			}while(kar !='"');
 			c = c+1;
 			
-			teks += kar;
 			inpt_list_sym(c,teks);
 			teks = '\0';
 		}
@@ -226,6 +266,7 @@ if(file.is_open()){
 	}
   file.close();
 }
+alp_konver();
 tampil_list();
 hapus();
 	return 0;
