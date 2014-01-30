@@ -14,7 +14,7 @@ struct node{
 node *awl_smpl_alp = NULL;
 node *awl_smpl_dgt = NULL;
 node *awl_smpl_sym = NULL;
-
+//Devide
 void inpt_list_alp(int c,string data){
 	node *temp, *temp2;
 	temp = new node;
@@ -62,7 +62,7 @@ void inpt_list_sym(int c,string data){
 		temp2->next = temp;
 	}
 } 
-
+//Conquer
 void alp_konver(){
 	node *bantu;
 	int c;
@@ -94,7 +94,74 @@ void alp_konver(){
 	
 } 
 
+void dgt_konver(){
+	node *bantu;
+	int k,g;
+	bool ketemu;
 
+	if (awl_smpl_dgt == NULL)
+		cout << "Data Kosong";
+	else{
+		bantu = awl_smpl_dgt;
+		do{
+			g = 0;
+			ketemu = false;
+			k =bantu->data.length();
+			while(g!=k){
+				if(bantu->data[g]=='.'){
+					ketemu = true;
+					bantu->token = "T_float";
+					g = k;									
+				}else{
+					g++;
+				}
+			}
+			if(ketemu==false){
+			bantu->token = "T_int";
+			}
+			bantu = bantu->next;  
+		}while (bantu != NULL);
+	}
+	
+} 
+
+void sym_konver(){
+	node *bantu;
+	int k,g;
+	bool ketemu;
+
+	if (awl_smpl_sym == NULL)
+		cout << "Data Kosong";
+	else{
+		bantu = awl_smpl_sym;
+		do{
+			if(bantu->data[0]=='"'){bantu->token="T_string";}
+			else if(bantu->data==";"){bantu->token="T_tikom";}
+		   	else if(bantu->data==":"){bantu->token="T_tikdua";}
+			else if(bantu->data=="("){bantu->token="T_bukrung";}
+			else if(bantu->data==")"){bantu->token="T_tuprung";}
+			else if(bantu->data=="+"){bantu->token="T_tambah";}
+			else if(bantu->data=="-"){bantu->token="T_garbaw";}
+			else if(bantu->data=="/"){bantu->token="T_mirkir";}
+			else if(bantu->data=="\\"){bantu->token="T_mirkan";}
+			else if(bantu->data=="%"){bantu->token="T_persen";}
+			else if(bantu->data==">"){bantu->token="T_lebdar";}
+			else if(bantu->data=="<"){bantu->token="T_kurdar";}
+			else if(bantu->data=="="){bantu->token="T_samdeng";}
+			else if(bantu->data=="*"){bantu->token="T_kali";}
+			else if(bantu->data=="."){bantu->token="T_titik";}
+			else if(bantu->data==","){bantu->token="T_koma";}
+			else if(bantu->data=="{"){bantu->token="T_bukraw";}
+			else if(bantu->data=="}"){bantu->token="T_tupraw";}
+			else if(bantu->data=="["){bantu->token="T_bukkurkot";}
+			else if(bantu->data=="]"){bantu->token="T_tupkurkot";}
+			else if(bantu->data=="!"){bantu->token="T_seru";}
+		  
+			bantu = bantu->next;  
+		}while (bantu != NULL);
+	}
+	
+} 
 
 void tampil_list(){
 	node *bantu;
@@ -104,8 +171,8 @@ void tampil_list(){
 	else{
 		bantu = awl_smpl_alp;
 		do{
-			cout << bantu->id << " ";
-			cout << bantu->data << " ";
+			cout << bantu->id << "  ";
+			cout << bantu->data << "       ";
 			cout << bantu->token<<endl;
 			bantu = bantu->next;  
 		}while (bantu != NULL);
@@ -116,8 +183,9 @@ void tampil_list(){
 	else{
 		bantu = awl_smpl_dgt;
 		do{
-			cout << bantu->id << " ";
-			cout << bantu->data<<endl;
+			cout << bantu->id << "  ";
+			cout << bantu->data << "       ";
+			cout << bantu->token<<endl;
 			bantu = bantu->next;  
 		}while (bantu != NULL);
 	}
@@ -127,8 +195,9 @@ void tampil_list(){
 	else{
 		bantu = awl_smpl_sym;
 		do{
-			cout << bantu->id << " ";
-			cout << bantu->data<<endl;
+			cout << bantu->id << "  ";
+			cout << bantu->data << "       ";
+			cout << bantu->token<<endl;
 			bantu = bantu->next;  
 		}while (bantu != NULL);
 	}
@@ -267,6 +336,8 @@ if(file.is_open()){
   file.close();
 }
 alp_konver();
+dgt_konver();
+sym_konver();
 tampil_list();
 hapus();
 	return 0;
