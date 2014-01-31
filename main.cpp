@@ -14,7 +14,8 @@ struct node{
 node *awl_smpl_alp = NULL;
 node *awl_smpl_dgt = NULL;
 node *awl_smpl_sym = NULL;
-node *gabung = NULL;
+node *gbng_p1 = NULL;
+node *gbng_p2 = NULL;
 //Devide
 void inpt_list_alp(int c,string data){
 	node *temp, *temp2;
@@ -69,9 +70,10 @@ void alp_konver(){
 	node *bantu;
 	int c;
 	bool ketemu;
-	string keyword[17] ={"var","mulai","selesai","int","string","program"
-			   			,"float","tulis","baca ","jika","maka","atau"
-			   			,"ketika","lakukan","untuk","sampai"}; 
+	string keyword[20] ={"var","mulai","selesai","int","string","program"
+			   			,"float","tulis","baca","jika","maka","atau"
+			   			,"ketika","lakukan","untuk","sampai","prosedur"
+						,"kembalikan","fungsi"}; 
 	if (awl_smpl_alp == NULL)
 		cout << "Data Kosong";
 	else{
@@ -79,11 +81,11 @@ void alp_konver(){
 		do{
 		c =0;
 		ketemu = false;
-		while(c!=16){
+		while(c!=19){
 			if(keyword[c]==bantu->data){
-				bantu->token = "T_" + keyword[c];
+				bantu->token = "T_key_" + keyword[c];
 				ketemu = true;
-				c = 15;
+				c = 18;
 			}
 			c++;
 		}
@@ -138,6 +140,7 @@ void sym_konver(){
 		bantu = awl_smpl_sym;
 		do{
 			if(bantu->data[0]=='"'){bantu->token="T_string";}
+			else if(bantu->data[0]=='\''){bantu->token="T_char";}
 			else if(bantu->data==";"){bantu->token="T_tikom";}
 		   	else if(bantu->data==":"){bantu->token="T_tikdua";}
 			else if(bantu->data=="("){bantu->token="T_bukrung";}
@@ -183,10 +186,10 @@ void sort1(){
 		temp->data = kanan->data;
 		temp->token = kanan->token;
 		temp->next = NULL;
-		if (gabung == NULL)
-			gabung = temp;
+		if (gbng_p1 == NULL)
+			gbng_p1 = temp;
 		else{
-			temp2 = gabung;
+			temp2 = gbng_p1;
 			while (temp2->next != NULL)
 				temp2 = temp2->next;
 				temp2->next = temp;
@@ -202,10 +205,10 @@ void sort1(){
 		temp->data = kiri->data;
 		temp->token = kiri->token;
 		temp->next = NULL;
-		if (gabung == NULL)
-			gabung = temp;
+		if (gbng_p1 == NULL)
+			gbng_p1 = temp;
 		else{
-			temp2 = gabung;
+			temp2 = gbng_p1;
 			while (temp2->next != NULL)
 				temp2 = temp2->next;
 				temp2->next = temp;
@@ -221,10 +224,10 @@ void sort1(){
 		temp->data = kiri->data;
 		temp->token = kiri->token;
 		temp->next = NULL;
-		if (gabung == NULL)
-			gabung = temp;
+		if (gbng_p1 == NULL)
+			gbng_p1 = temp;
 		else{
-			temp2 = gabung;
+			temp2 = gbng_p1;
 			while (temp2->next != NULL)
 				temp2 = temp2->next;
 				temp2->next = temp;
@@ -239,10 +242,10 @@ void sort1(){
 		temp->data = kanan->data;
 		temp->token = kanan->token;
 		temp->next = NULL;
-		if (gabung == NULL)
-			gabung = temp;
+		if (gbng_p1 == NULL)
+			gbng_p1 = temp;
 		else{
-			temp2 = gabung;
+			temp2 = gbng_p1;
 			while (temp2->next != NULL)
 				temp2 = temp2->next;
 				temp2->next = temp;
@@ -254,52 +257,108 @@ void sort1(){
 	}while((kanan!=NULL)||(kiri!=NULL));
 }
 
+void sort2(){
+	node *kiri;
+	node *kanan;
+	node *temp, *temp2;
+	kiri = awl_smpl_sym;
+	kanan = gbng_p1;
+	
+	
+	do{
+
+		 if(kiri==NULL){
+		//masukan semua data yang ada di kanan;
+		do{
+		temp = new node;
+		temp->id = kanan->id;
+		temp->data = kanan->data;
+		temp->token = kanan->token;
+		temp->next = NULL;
+		if (gbng_p2 == NULL)
+			gbng_p2 = temp;
+		else{
+			temp2 = gbng_p2;
+			while (temp2->next != NULL)
+				temp2 = temp2->next;
+				temp2->next = temp;
+		}
+
+		kanan = kanan->next;
+		}while(kanan!=NULL);
+	}else if(kanan==NULL){
+		//masukan semua data yang ada di kiri;
+		do{
+		temp = new node;
+		temp->id = kiri->id;
+		temp->data = kiri->data;
+		temp->token = kiri->token;
+		temp->next = NULL;
+		if (gbng_p2 == NULL)
+			gbng_p2 = temp;
+		else{
+			temp2 = gbng_p2;
+			while (temp2->next != NULL)
+				temp2 = temp2->next;
+				temp2->next = temp;
+		}
+
+		kiri = kiri->next;
+		}while(kiri!=NULL);
+	}else if(kiri->id < kanan->id){
+		//inputkirikelist
+		
+		temp = new node;
+		temp->id = kiri->id;
+		temp->data = kiri->data;
+		temp->token = kiri->token;
+		temp->next = NULL;
+		if (gbng_p2 == NULL)
+			gbng_p2 = temp;
+		else{
+			temp2 = gbng_p2;
+			while (temp2->next != NULL)
+				temp2 = temp2->next;
+				temp2->next = temp;
+		}
+
+		kiri = kiri->next;
+	}else if(kiri->id > kanan->id){
+		//inputkananlist
+		
+		temp = new node;
+		temp->id = kanan->id;
+		temp->data = kanan->data;
+		temp->token = kanan->token;
+		temp->next = NULL;
+		if (gbng_p2 == NULL)
+			gbng_p2 = temp;
+		else{
+			temp2 = gbng_p2;
+			while (temp2->next != NULL)
+				temp2 = temp2->next;
+				temp2->next = temp;
+		}
+
+		kanan = kanan->next;
+	}
+
+	}while((kanan!=NULL)||(kiri!=NULL));
+}
+
+
 void tampil_list(){
 	node *bantu;
-	cout << "Data Alpha"<<endl;
-	if (awl_smpl_alp == NULL)
+	
+	cout << "Hasil Scan : "<<endl;
+	cout << "no      ||lexeme      || Token"<<endl<<endl;
+	if (gbng_p2 == NULL)
 		cout << "Data Kosong";
 	else{
-		bantu = awl_smpl_alp;
+		bantu = gbng_p2;
 		do{
-			cout << bantu->id << "  ";
-			cout << bantu->data << "       ";
-			cout << bantu->token<<endl;
-			bantu = bantu->next;  
-		}while (bantu != NULL);
-	}
-	cout << "Data Digit" << endl;
-	if (awl_smpl_dgt == NULL)
-		cout << "Data Kosong";
-	else{
-		bantu = awl_smpl_dgt;
-		do{
-			cout << bantu->id << "  ";
-			cout << bantu->data << "       ";
-			cout << bantu->token<<endl;
-			bantu = bantu->next;  
-		}while (bantu != NULL);
-	}
-	cout << "Data Symbol" << endl;
-	if (awl_smpl_sym == NULL)
-		cout << "Data Kosong";
-	else{
-		bantu = awl_smpl_sym;
-		do{
-			cout << bantu->id << "  ";
-			cout << bantu->data << "       ";
-			cout << bantu->token<<endl;
-			bantu = bantu->next;  
-		}while (bantu != NULL);
-	}
-	cout << "Hasil gabung : "<<endl;
-	if (gabung == NULL)
-		cout << "Data Kosong";
-	else{
-		bantu = gabung;
-		do{
-			cout << bantu->id << "  ";
-			cout << bantu->data << "       ";
+			cout << bantu->id << "        ";
+			cout << bantu->data << "          ";
 			cout << bantu->token<<endl;
 			bantu = bantu->next;  
 		}while (bantu != NULL);
@@ -308,7 +367,26 @@ void tampil_list(){
 	
 } 
 
+void simpan(char namafile[]){
+	node *bantu;
+	ofstream file;
+	file.open(namafile);
+	file << "Hasil Scan : "<<endl;
+	file << "no      ||lexeme      || Token"<<endl<<endl;
+	if (gbng_p2 == NULL)
+		file << "Data Kosong";
+	else{
+		bantu = gbng_p2;
+		do{
+			file << bantu->id << "        ";
+			file << bantu->data << "          ";
+			file << bantu->token<<endl;
+			bantu = bantu->next;  
+		}while (bantu != NULL);
+	}
 
+	file.close();
+} 
 
 void hapus(){
 	node *bantu;
@@ -341,20 +419,38 @@ void hapus(){
 			delete bantu;
 		}while(awl_smpl_sym !=NULL);
 	}
+
+	if(gbng_p1->next == NULL){
+		delete gbng_p1;
+	}else{
+		do{
+			bantu = gbng_p1;
+			gbng_p1 = gbng_p1->next;
+			delete bantu;
+		}while(gbng_p1 !=NULL);
+	}
 	
-	
+	if(gbng_p2->next == NULL){
+		delete gbng_p2;
+	}else{
+		do{
+			bantu = gbng_p2;
+			gbng_p2 = gbng_p2->next;
+			delete bantu;
+		}while(gbng_p2 !=NULL);
+	}	
 } 
 
 
 
 int main(int argc, char* argv[]) {
 char kar,h_kar;
-char namafile[41];
+char namafile[41],out[3];
+strcpy(out,"-o");
 int c=0;
 string teks;
 string digit;
-strcpy(namafile,argv[1]);
-ifstream file(namafile);
+ifstream file(argv[1]);
 if(file.is_open()){
 	while(true!=(file.eof())){
 
@@ -393,6 +489,18 @@ if(file.is_open()){
 				file >> noskipws >> kar;
 				teks += kar;
 			}while(kar !='"');
+			c = c+1;
+			
+			inpt_list_sym(c,teks);
+			teks = '\0';
+		}
+
+		if(kar == '\''){
+			teks = kar;
+			do{
+				file >> noskipws >> kar;
+				teks += kar;
+			}while(kar !='\'');
 			c = c+1;
 			
 			inpt_list_sym(c,teks);
@@ -442,7 +550,21 @@ alp_konver();
 dgt_konver();
 sym_konver();
 sort1();
-tampil_list();
+sort2();
+
+if(argc >= 3){
+	if((strcmp(argv[2],"-o"))==0){
+		strcpy(namafile,argv[3]);
+		simpan(namafile);
+	}
+}else{
+	tampil_list();
+}
+
+
 hapus();
 	return 0;
 }
+
+
+
