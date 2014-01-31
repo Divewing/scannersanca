@@ -14,7 +14,7 @@ mulai
   tulis "Nama anda adalah : " nama;
   tulis "Lingkaran dengan panjang " panjang " adalah " jumlah;
   baca(n);
-  k = 'k';
+  k = 'k;
  
 prosedur(){
 	var
@@ -29,7 +29,7 @@ fungsi(int a){
 	var
 	a : int;
 	mulai
-	  tulis"Masukan nilai a: ";
+	  tulis"Masukan nilai a: ;
 	kembalikan a;
 	selesai; 
 }

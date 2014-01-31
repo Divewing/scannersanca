@@ -139,8 +139,20 @@ void sym_konver(){
 	else{
 		bantu = awl_smpl_sym;
 		do{
-			if(bantu->data[0]=='"'){bantu->token="T_string";}
-			else if(bantu->data[0]=='\''){bantu->token="T_char";}
+			if(bantu->data[0]=='"'){
+				if(bantu->data[bantu->data.length()-1]=='"'){
+					bantu->token="T_string";
+				}else{
+					bantu->token="Error";
+				}
+			}
+			else if(bantu->data[0]=='\''){
+				if(bantu->data.length()>4)
+					{bantu->token="T_char";
+				}else{
+					bantu->token="Error";
+				}
+			}
 			else if(bantu->data==";"){bantu->token="T_tikom";}
 		   	else if(bantu->data==":"){bantu->token="T_tikdua";}
 			else if(bantu->data=="("){bantu->token="T_bukrung";}
@@ -351,11 +363,7 @@ void tampil_list(){
 	node *bantu;
 	
 	cout << "Hasil Scan : "<<endl;
-<<<<<<< HEAD
-	cout << "no      ||word      || Token"<<endl<<endl;
-=======
 	cout << "no      ||lexeme      || Token"<<endl<<endl;
->>>>>>> 9351f7d6b97d1ae6b0e4b9240149d1df9672bae1
 	if (gbng_p2 == NULL)
 		cout << "Data Kosong";
 	else{
@@ -376,11 +384,7 @@ void simpan(char namafile[]){
 	ofstream file;
 	file.open(namafile);
 	file << "Hasil Scan : "<<endl;
-<<<<<<< HEAD
-	file << "no      ||word      || Token"<<endl<<endl;
-=======
 	file << "no      ||lexeme      || Token"<<endl<<endl;
->>>>>>> 9351f7d6b97d1ae6b0e4b9240149d1df9672bae1
 	if (gbng_p2 == NULL)
 		file << "Data Kosong";
 	else{
@@ -458,10 +462,6 @@ strcpy(out,"-o");
 int c=0;
 string teks;
 string digit;
-<<<<<<< HEAD
-strcpy(namafile,argv[3]);
-=======
->>>>>>> 9351f7d6b97d1ae6b0e4b9240149d1df9672bae1
 ifstream file(argv[1]);
 if(file.is_open()){
 	while(true!=(file.eof())){
@@ -500,7 +500,10 @@ if(file.is_open()){
 			do{
 				file >> noskipws >> kar;
 				teks += kar;
-			}while(kar !='"');
+				if(kar=='"'){
+				 kar='\n';
+				}
+			}while(kar !='\n');
 			c = c+1;
 			
 			inpt_list_sym(c,teks);
@@ -512,7 +515,10 @@ if(file.is_open()){
 			do{
 				file >> noskipws >> kar;
 				teks += kar;
-			}while(kar !='\'');
+				if(kar=='\''){
+				 kar='\n';
+				}
+			}while(kar !='\n');
 			c = c+1;
 			
 			inpt_list_sym(c,teks);
@@ -563,10 +569,6 @@ dgt_konver();
 sym_konver();
 sort1();
 sort2();
-<<<<<<< HEAD
-tampil_list();
-simpan(namafile);
-=======
 
 if(argc >= 3){
 	if((strcmp(argv[2],"-o"))==0){
@@ -578,7 +580,6 @@ if(argc >= 3){
 }
 
 
->>>>>>> 9351f7d6b97d1ae6b0e4b9240149d1df9672bae1
 hapus();
 	return 0;
 }
