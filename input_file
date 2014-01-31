@@ -2,7 +2,8 @@ var
   nama18 : string;
   jumlah : float;
   panjang : int;
-  n : int;	
+  n : int;
+  k : char;	
 
 mulai
   tulis "Masukan nama anda : ";
@@ -13,7 +14,26 @@ mulai
   tulis "Nama anda adalah : " nama;
   tulis "Lingkaran dengan panjang " panjang " adalah " jumlah;
   baca(n);
+  k = 'k';
  
+prosedur(){
+	var
+	  a:int;	
+	mulai
+	  tulis "Masukan nilai a: ";
+	  baca(a);
+	selesai; 
+}
+
+fungsi(int a){
+	var
+	a : int;
+	mulai
+	  tulis"Masukan nilai a: ";
+	kembalikan a;
+	selesai; 
+}
+
 #if
  
   jika(n == 10)maka{

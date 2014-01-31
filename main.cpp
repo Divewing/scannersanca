@@ -70,9 +70,10 @@ void alp_konver(){
 	node *bantu;
 	int c;
 	bool ketemu;
-	string keyword[17] ={"var","mulai","selesai","int","string","program"
-			   			,"float","tulis","baca ","jika","maka","atau"
-			   			,"ketika","lakukan","untuk","sampai"}; 
+	string keyword[20] ={"var","mulai","selesai","int","string","program"
+			   			,"float","tulis","baca","jika","maka","atau"
+			   			,"ketika","lakukan","untuk","sampai","prosedur"
+						,"kembalikan","fungsi"}; 
 	if (awl_smpl_alp == NULL)
 		cout << "Data Kosong";
 	else{
@@ -80,11 +81,11 @@ void alp_konver(){
 		do{
 		c =0;
 		ketemu = false;
-		while(c!=16){
+		while(c!=19){
 			if(keyword[c]==bantu->data){
-				bantu->token = "T_" + keyword[c];
+				bantu->token = "T_key_" + keyword[c];
 				ketemu = true;
-				c = 15;
+				c = 18;
 			}
 			c++;
 		}
@@ -139,6 +140,7 @@ void sym_konver(){
 		bantu = awl_smpl_sym;
 		do{
 			if(bantu->data[0]=='"'){bantu->token="T_string";}
+			else if(bantu->data[0]=='\''){bantu->token="T_char";}
 			else if(bantu->data==";"){bantu->token="T_tikom";}
 		   	else if(bantu->data==":"){bantu->token="T_tikdua";}
 			else if(bantu->data=="("){bantu->token="T_bukrung";}
@@ -349,7 +351,11 @@ void tampil_list(){
 	node *bantu;
 	
 	cout << "Hasil Scan : "<<endl;
+<<<<<<< HEAD
 	cout << "no      ||word      || Token"<<endl<<endl;
+=======
+	cout << "no      ||lexeme      || Token"<<endl<<endl;
+>>>>>>> 9351f7d6b97d1ae6b0e4b9240149d1df9672bae1
 	if (gbng_p2 == NULL)
 		cout << "Data Kosong";
 	else{
@@ -370,7 +376,11 @@ void simpan(char namafile[]){
 	ofstream file;
 	file.open(namafile);
 	file << "Hasil Scan : "<<endl;
+<<<<<<< HEAD
 	file << "no      ||word      || Token"<<endl<<endl;
+=======
+	file << "no      ||lexeme      || Token"<<endl<<endl;
+>>>>>>> 9351f7d6b97d1ae6b0e4b9240149d1df9672bae1
 	if (gbng_p2 == NULL)
 		file << "Data Kosong";
 	else{
@@ -443,11 +453,15 @@ void hapus(){
 
 int main(int argc, char* argv[]) {
 char kar,h_kar;
-char namafile[41];
+char namafile[41],out[3];
+strcpy(out,"-o");
 int c=0;
 string teks;
 string digit;
+<<<<<<< HEAD
 strcpy(namafile,argv[3]);
+=======
+>>>>>>> 9351f7d6b97d1ae6b0e4b9240149d1df9672bae1
 ifstream file(argv[1]);
 if(file.is_open()){
 	while(true!=(file.eof())){
@@ -487,6 +501,18 @@ if(file.is_open()){
 				file >> noskipws >> kar;
 				teks += kar;
 			}while(kar !='"');
+			c = c+1;
+			
+			inpt_list_sym(c,teks);
+			teks = '\0';
+		}
+
+		if(kar == '\''){
+			teks = kar;
+			do{
+				file >> noskipws >> kar;
+				teks += kar;
+			}while(kar !='\'');
 			c = c+1;
 			
 			inpt_list_sym(c,teks);
@@ -537,8 +563,22 @@ dgt_konver();
 sym_konver();
 sort1();
 sort2();
+<<<<<<< HEAD
 tampil_list();
 simpan(namafile);
+=======
+
+if(argc >= 3){
+	if((strcmp(argv[2],"-o"))==0){
+		strcpy(namafile,argv[3]);
+		simpan(namafile);
+	}
+}else{
+	tampil_list();
+}
+
+
+>>>>>>> 9351f7d6b97d1ae6b0e4b9240149d1df9672bae1
 hapus();
 	return 0;
 }
