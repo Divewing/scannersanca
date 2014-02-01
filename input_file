@@ -10,11 +10,11 @@ mulai
   baca(nama) \gb;
   tulis "Masukan panjang jari-jari : ";
   baca(panjang) \gb;
-  jumlah = 3.14 * panjang * panjang;
+  jumlah=3.14*panjang*panjang;
   tulis "Nama anda adalah : " nama;
-  tulis "Lingkaran dengan panjang " panjang " adalah " jumlah;
+  tulis "Lingkaran dengan panjang"  panjang " adalah " jumlah;
   baca(n);
-  k = 'k;
+  k = 'k';
  
 prosedur(){
 	var
@@ -29,7 +29,7 @@ fungsi(int a){
 	var
 	a : int;
 	mulai
-	  tulis"Masukan nilai a: ;
+	  tulis"Masukan nilai a: ";
 	kembalikan a;
 	selesai; 
 }

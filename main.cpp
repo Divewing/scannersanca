@@ -65,7 +65,114 @@ void inpt_list_sym(int c,string data){
 	}
 } 
 
+void bagi(char filebuk[]){
+	char kar,h_kar;
+	int c=0;
+	string teks;
+	string digit;
+	ifstream file(filebuk);
+	if(file.is_open()){
+		while(true!=(file.eof())){
 
+			file >> noskipws >> kar;
+	
+		if(isalpha(kar)){
+			int k=1;
+				do{
+					if(k==1){teks = kar;};
+					if(k==0){teks += kar;};
+					file >> noskipws >> kar;
+					k = 0;
+				}while(isalnum(kar));
+			c = c+1;
+			inpt_list_alp(c,teks);
+			teks = '\0';
+		}
+
+		if(isdigit(kar)){
+				int k=1;
+				do{
+					if(k==1){digit = kar;};
+					if(k==0){digit += kar;};
+					file >> noskipws >> kar;
+					k = 0;
+				}while((isdigit(kar))||(kar=='.'));
+			c = c+1;
+			inpt_list_dgt(c,digit);
+			digit = '\0';
+			
+		}
+
+		if(kar == '"'){
+			teks = kar;
+			do{
+				file >> noskipws >> kar;
+				teks += kar;
+				if(kar=='"'){
+				 kar='\n';
+				}
+			}while(kar !='\n');
+			c = c+1;
+			
+			inpt_list_sym(c,teks);
+			teks = '\0';
+		}
+
+		if(kar == '\''){
+			teks = kar;
+			do{
+				file >> noskipws >> kar;
+				teks += kar;
+				if(kar=='\''){
+				 kar='\n';
+				}
+			}while(kar !='\n');
+			c = c+1;
+			
+			inpt_list_sym(c,teks);
+			teks = '\0';
+		}
+
+ 		if(kar =='#'){
+			while(kar!='\n'){
+				file >> noskipws >> kar;
+			}
+		}
+		
+		if(	(kar==';')||
+		   	(kar==':')||
+			(kar=='(')||
+			(kar==')')||
+			(kar=='+')||
+			(kar=='-')||
+			(kar=='/')||
+			(kar=='\\')||
+			(kar=='%')||
+			(kar=='>')||
+			(kar=='<')||
+			(kar=='=')||
+			(kar=='*')||
+			(kar=='.')||
+			(kar==',')||
+			(kar=='{')||
+			(kar=='}')||
+			(kar=='[')||
+			(kar==']')||
+			(kar=='!')
+		  ){
+			c = c+1;
+			teks = kar;
+			inpt_list_sym(c,teks);
+			teks='\0';
+		}
+
+	
+		
+		
+	}
+  file.close();
+	}
+}
 void alp_konver(){
 	node *bantu;
 	int c;
@@ -363,7 +470,7 @@ void tampil_list(){
 	node *bantu;
 	
 	cout << "Hasil Scan : "<<endl;
-	cout << "no      ||lexeme      || Token"<<endl<<endl;
+	cout << "no      || lexeme      || Token"<<endl<<endl;
 	if (gbng_p2 == NULL)
 		cout << "Data Kosong";
 	else{
@@ -379,12 +486,12 @@ void tampil_list(){
 	
 } 
 
-void simpan(char namafile[]){
+void simpan(char filesim[]){
 	node *bantu;
 	ofstream file;
-	file.open(namafile);
+	file.open(filesim);
 	file << "Hasil Scan : "<<endl;
-	file << "no      ||lexeme      || Token"<<endl<<endl;
+	file << "no      || lexeme      || Token"<<endl<<endl;
 	if (gbng_p2 == NULL)
 		file << "Data Kosong";
 	else{
@@ -456,114 +563,12 @@ void hapus(){
 
 
 int main(int argc, char* argv[]) {
-char kar,h_kar;
-char namafile[41],out[3];
-strcpy(out,"-o");
-int c=0;
-string teks;
-string digit;
-ifstream file(argv[1]);
-if(file.is_open()){
-	while(true!=(file.eof())){
 
-		file >> noskipws >> kar;
-	
-		if(isalpha(kar)){
-			int k=1;
-				do{
-					if(k==1){teks = kar;};
-					if(k==0){teks += kar;};
-					file >> noskipws >> kar;
-					k = 0;
-				}while(isalnum(kar));
-			c = c+1;
-			inpt_list_alp(c,teks);
-			teks = '\0';
-		}
-
-		if(isdigit(kar)){
-				int k=1;
-				do{
-					if(k==1){digit = kar;};
-					if(k==0){digit += kar;};
-					file >> noskipws >> kar;
-					k = 0;
-				}while((isdigit(kar))||(kar=='.'));
-			c = c+1;
-			inpt_list_dgt(c,digit);
-			digit = '\0';
-			
-		}
-
-		if(kar == '"'){
-			teks = kar;
-			do{
-				file >> noskipws >> kar;
-				teks += kar;
-				if(kar=='"'){
-				 kar='\n';
-				}
-			}while(kar !='\n');
-			c = c+1;
-			
-			inpt_list_sym(c,teks);
-			teks = '\0';
-		}
-
-		if(kar == '\''){
-			teks = kar;
-			do{
-				file >> noskipws >> kar;
-				teks += kar;
-				if(kar=='\''){
-				 kar='\n';
-				}
-			}while(kar !='\n');
-			c = c+1;
-			
-			inpt_list_sym(c,teks);
-			teks = '\0';
-		}
-
- 		if(kar =='#'){
-			while(kar!='\n'){
-				file >> noskipws >> kar;
-			}
-		}
-		
-		if(	(kar==';')||
-		   	(kar==':')||
-			(kar=='(')||
-			(kar==')')||
-			(kar=='+')||
-			(kar=='-')||
-			(kar=='/')||
-			(kar=='\\')||
-			(kar=='%')||
-			(kar=='>')||
-			(kar=='<')||
-			(kar=='=')||
-			(kar=='*')||
-			(kar=='.')||
-			(kar==',')||
-			(kar=='{')||
-			(kar=='}')||
-			(kar=='[')||
-			(kar==']')||
-			(kar=='!')
-		  ){
-			c = c+1;
-			teks = kar;
-			inpt_list_sym(c,teks);
-			teks='\0';
-		}
-
-	
-		
-		
-	}
-  file.close();
-}
+char filesim[41],filebuk[41];
+strcpy(filebuk,argv[1]);
+//divide
+bagi(filebuk);
+//conquer
 alp_konver();
 dgt_konver();
 sym_konver();
@@ -572,8 +577,8 @@ sort2();
 
 if(argc >= 3){
 	if((strcmp(argv[2],"-o"))==0){
-		strcpy(namafile,argv[3]);
-		simpan(namafile);
+		strcpy(filesim,argv[3]);
+		simpan(filesim);
 	}
 }else{
 	tampil_list();
