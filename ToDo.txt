@@ -1,3 +1,0 @@
--Ubah Data yang ada di setiap simpul menjadi Token
--Gabung simpul - simpul yang datanya sudah di ubah menjadi satu simpul
--Simpan pada satu file
