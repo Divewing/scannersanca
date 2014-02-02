@@ -8,7 +8,7 @@ var
 mulai
   tulis "Masukan nama anda : ";
   baca(nama) \gb;
-  tulis "Masukan panjang jari-jari : ";
+  tulis "Masukan panjang jari-jari : ;
   baca(panjang) \gb;
   jumlah=3.14*panjang*panjang;
   tulis "Nama anda adalah : " nama;

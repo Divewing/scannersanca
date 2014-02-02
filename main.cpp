@@ -146,26 +146,13 @@ void bagikat(char filebuk[]){
 			}
 		}
 		
-		if(	(kar==';')||
-		   	(kar==':')||
-			(kar=='(')||
-			(kar==')')||
-			(kar=='+')||
-			(kar=='-')||
-			(kar=='/')||
-			(kar=='\\')||
-			(kar=='%')||
-			(kar=='>')||
-			(kar=='<')||
-			(kar=='=')||
-			(kar=='*')||
-			(kar=='.')||
-			(kar==',')||
-			(kar=='{')||
-			(kar=='}')||
-			(kar=='[')||
-			(kar==']')||
-			(kar=='!')
+		if(	(kar==';')||(kar==':')||(kar=='(')||
+			(kar==')')||(kar=='+')||(kar=='-')||
+			(kar=='/')||(kar=='\\')||(kar=='%')||
+			(kar=='>')||(kar=='<')||(kar=='=')||
+			(kar=='*')||(kar=='.')||(kar==',')||
+			(kar=='{')||(kar=='}')||(kar=='[')||
+			(kar==']')||(kar=='!')
 		  ){
 			c = c+1;
 			teks = kar;
@@ -173,9 +160,6 @@ void bagikat(char filebuk[]){
 			inpt_list_sym(c,teks);
 			teks='\0';
 		}
-
-	
-		
 		
 	}
   file.close();
@@ -202,9 +186,6 @@ string alp_konver(string bantu){
 		if(ketemu==false){
 			return "T_ident";
 		}
-		
-		
-
 	
 } 
 
@@ -229,9 +210,6 @@ string dgt_konver(string bantu){
 			return "T_int";
 			}
 
-		
-	
-	
 } 
 
 string sym_konver(string bantu){
@@ -271,7 +249,6 @@ string sym_konver(string bantu){
 			else if(bantu=="]"){return "T_tupkurkot";}
 			else if(bantu=="!"){return "T_seru";}
 		  
-
 	
 } 
 
@@ -428,16 +405,12 @@ void merge(node *a1, node *a2, node *a,int kat){
 }
 
 
-
-
-
 void sort1(){
 	node *kiri;
 	node *kanan;
 	node *temp, *temp2;
 	kiri = awl_smpl_alp;
 	kanan = awl_smpl_dgt;
-	
 	
 	do{
 
@@ -614,7 +587,6 @@ void sort2(){
 
 void tampil_list(char filebuk[]){
 	node *bantu;
-	
 	cout << "Hasil Scan file "<< filebuk << " : "<<endl;
 	cout << "no      || lexeme      || Token"<<endl<<endl;
 	if (gbng_p2 == NULL)
@@ -708,6 +680,7 @@ void hapus(){
 
 void dandc(node *a,int n,int kat){
 	if(n>1){
+//-----------------Bagi Menjadi dua bagian----------------
 		int n1,n2,i;
 		n1= n/2;
 		n2= n1+1;
@@ -737,7 +710,6 @@ void dandc(node *a,int n,int kat){
 			kiri = kiri->next;
 		}
 		
-		
 		kanan = kiri;
 		do{
 			temp = new node;
@@ -758,52 +730,13 @@ void dandc(node *a,int n,int kat){
 			kanan = kanan->next;
 		}while(kanan!=NULL);
 
-/*--------------------------------------------------------------------------------
-		cout << "Hasil Scan Kiri : "<<endl;
-	cout << "no      || lexeme      || Token"<<endl<<endl;
-	if (a1 == NULL)
-		cout << "Data Kosong";
-	else{
-		bantu = a1;
-		do{
-			cout << bantu->id << "        ";
-			cout << bantu->data << "          ";
-			cout << bantu->token<<endl;
-			bantu = bantu->next;  
-		}while (bantu != NULL);
-	}
-
-
-	
-	
-
-	
-	
-	cout << "Hasil Scan Kanan: "<<endl;
-	cout << "no      || lexeme      || Token"<<endl<<endl;
-	if (a2 == NULL)
-		cout << "Data Kosong";
-	else{
-		bantu = a2;
-		do{
-			cout << bantu->id << "        ";
-			cout << bantu->data << "          ";
-			cout << bantu->token<<endl;
-			bantu = bantu->next;  
-		}while (bantu != NULL);
-	}
-------------------------------------------------------------------------*/
-
-
 //-----------------------------------------------------------------end dari pembagian menjadi dua		
 		
 		dandc(a1,n1,kat);
 		dandc(a2,n2-1,kat);
 		merge(a1,a2,a,kat);
 
-
 //Simpan hasilnya ke simpul yang sesuai
-
 		if(kat==1){
 			awl_smpl_alp = a;
 		}else if(kat==2){
@@ -815,37 +748,36 @@ void dandc(node *a,int n,int kat){
 	}
 }
 
-
 int main(int argc, char* argv[]) {
+if(argc>1){
+	char filesim[41],filebuk[41];
+	strcpy(filebuk,argv[1]);
 
-char filesim[41],filebuk[41];
-strcpy(filebuk,argv[1]);
+	//Membagi menjadi tiga kategori
+	bagikat(filebuk);
 
-//Membagi menjadi tiga kategori
-bagikat(filebuk);
+	//Divide and Conquer
+	dandc(awl_smpl_alp,talp,1);
+	dandc(awl_smpl_dgt,tdgt,2);
+	dandc(awl_smpl_sym,tsym,3);
 
-//Divide and Conquer
-dandc(awl_smpl_alp,talp,1);
-dandc(awl_smpl_dgt,tdgt,2);
-dandc(awl_smpl_sym,tsym,3);
+	//Memgabung ketiga kategori
+	sort1();
+	sort2();
 
-//Memgabung ketiga kategori
-sort1();
-sort2();
-
-if(argc >= 3){
-	if((strcmp(argv[2],"-o"))==0){
-		strcpy(filesim,argv[3]);
-		simpan(filebuk,filesim);
+	if(argc >= 3){
+		if((strcmp(argv[2],"-o"))==0){
+			strcpy(filesim,argv[3]);
+			simpan(filebuk,filesim);
+		}
+	}else{
+		tampil_list(filebuk);
 	}
+
+	hapus();
 }else{
-	tampil_list(filebuk);
+	cout << "Error :Tidak ada file input"<<endl;
+	cout << "Scanner dihentikan. "<<endl;
 }
-
-
-hapus();
-	return 0;
+return 0;
 }
-
-
-
